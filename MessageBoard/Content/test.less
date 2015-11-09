@@ -1,0 +1,13 @@
+﻿@baseColour: azure;
+
+.message {
+    background-color: @baseColour;
+    color: rgb(124,3,56);
+
+    .error {
+        background-color: darken(@baseColour, 50%);
+        -moz-box-shadow: @baseColour 5px 5px inset;
+        -webkit-box-shadow: @baseColour 5px 5px inset;
+        box-shadow: @baseColour 5px 5px inset;
+    }
+}

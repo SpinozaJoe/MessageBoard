@@ -1,0 +1,31 @@
+﻿@basemessageColour: #aaa;
+
+.message {
+    border: 1px solid @basemessageColour;
+    margin-bottom: 5px;
+    padding: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background: lighten(@basemessageColour, 25%);
+    margin-left: 0px;
+    margin-right: -20px;
+
+    .title {
+        font-size: 20px;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px @basemessageColour;
+    }
+
+    .reply {
+        border-top: 1px solid @basemessageColour;
+        margin-top: 5px;
+        margin-left: 15px;
+    }
+
+    .created {
+        font-size: 9px;
+        margin-left: 10px;
+        text-shadow: 2px 2px 3px @basemessageColour;
+    }
+}

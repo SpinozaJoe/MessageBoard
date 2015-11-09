@@ -1,0 +1,64 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Store Page";
+    ViewBag.InitModule = "store";
+}
+
+@section Scripts {
+    <script src="~/js/store.min.js"></script>
+}
+
+<div data-ng-view=""></div>
+
+<div data-ng-controller="StoreController as store">
+    <ul class="list-group">
+    <li class="list-group-item" data-ng-repeat="product in store.products | orderBy:'price'">
+        <product-title data-ng-hide="product.soldOut"></product-title>
+        <section data-ng-controller="PanelController as panel">
+            <ul class="nav nav-tabs">
+                <li><a href="#" data-ng-click="panel.selectTab(1)">Description</a></li>
+                <li><a href="#" data-ng-click="panel.selectTab(2)">Specification</a></li>
+                <li><a href="#" data-ng-click="panel.selectTab(3)">Reviews</a></li>
+            </ul>
+            <div data-ng-show="panel.tabIsSelected(1)">
+                {{product.description}}
+            </div>
+            <div data-ng-show="panel.tabIsSelected(2)">
+                {{product.specification}}
+            </div>
+            <div data-ng-show="panel.tabIsSelected(3)">
+                <section data-ng-repeat="review in product.reviews">
+                    <div>
+                        <b>{{review.stars}} Stars </b>{{review.body}}
+                    </div>
+                    <cite>- {{review.author}}</cite>
+                </section>
+                
+                <form name="reviewForm" data-ng-controller="ReviewController as reviewCtrl"
+                    data-ng-submit="reviewForm.$valid && reviewCtrl.addReview(product)" novalidate>
+                    <section>
+                        <div>
+                            <b>{{reviewCtrl.newReview.stars}} Stars </b>{{reviewCtrl.newReview.body}}
+                        </div>
+                        <cite>- {{reviewCtrl.newReview.author}}</cite>
+                    </section>
+                    <h3>Submit a Review</h3>
+                    <select name="starInput" data-ng-model="reviewCtrl.newReview.stars" required>
+                        <option value="1">1 Star</option>
+                        <option value="2">2 Star</option>
+                        <option value="3">3 Star</option>
+                        <option value="4">4 Star</option>
+                        <option value="5">5 Star</option>
+                    </select><span data-ng-show="reviewForm.starInput.$error.required">*</span>
+                    <div><textarea name="body" maxlength="300" data-ng-model="reviewCtrl.newReview.body" required></textarea><span data-ng-show="reviewForm.body.$error.required">*</span></div>
+                    <div><input name="email" type="email" data-ng-model="reviewCtrl.newReview.author" required/><span data-ng-hide="reviewForm.email.$valid">*</span></div>
+                    <div class="pullright">
+                        <input type="submit" class="btn btn.default" name="Submit"/>
+                    </div>
+                    <div>Form is {{reviewForm.$valid}}</div>
+                </form>
+            </div>
+        </section>
+    </li>
+    </ul>
+</div>
